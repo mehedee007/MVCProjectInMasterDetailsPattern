@@ -1,0 +1,201 @@
+﻿@model MVCProjectInMasterDetailsPattern.Models.Trainee
+
+@{
+    ViewBag.Title = "Create";
+    //Layout = null;
+}
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<div class="card-header bg-primary text-uppercase text-white" style="height:45px;">
+    <h4>Create Trainee</h4>
+</div>
+
+
+@*@using (Html.BeginForm("Create","Trainee",FormMethod.Post, new { enctype="multipart/form-data"}))*@
+@using (Ajax.BeginForm("Create", "Trainees", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "div-record", OnSuccess = "$('.close').click()" }, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Trainee</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.TraineeName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TraineeName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TraineeName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Gender, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DOB, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TraineeEmail, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TraineeEmail, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TraineeEmail, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TraineeContact, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TraineeContact, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TraineeContact, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CourseID, "CourseID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CourseID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CourseID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.TraineeImage, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TraineeImage, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TraineeImage, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.LabelFor(model => model.TraineeImage, htmlAttributes: new { @class = "control-label col-md-2 custom-file-label" })
+                <div>
+                    <input type="file" class="custom-file-input" name="fileBase" required="" />
+                </div>
+            </div>
+
+        </div>
+        @*<div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>*@
+    </div>
+    <div class="col-md-12">
+        <table id="moduleInfo" class="table table-striped table-sm">
+            <thead>
+                <tr>
+                    <th>Module Name</th>
+                    <th>External Mark </th>
+                    <th>External Date</th>
+                    <th>Evidence Mark</th>
+                    <th>Evidence Date</th>
+                    <th>Pass/Fail</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.TraineeModuleDescriptions.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.EditorFor(x => x.TraineeModuleDescriptions[i].ModuleName, new { htmlAttribute = new { @class = "form-control" } })
+                        </td>
+                        <td>
+                            @Html.EditorFor(x => x.TraineeModuleDescriptions[i].ExternalMark, new { htmlAttribute = new { @class = "form-control" } })
+                        </td>
+                        <td>
+                            @Html.EditorFor(x => x.TraineeModuleDescriptions[i].ExternalDate, new { htmlAttribute = new { @class = "form-control" } })
+                        </td>
+                        <td>
+                            @Html.EditorFor(x => x.TraineeModuleDescriptions[i].EvidenceMark, new { htmlAttribute = new { @class = "form-control" } })
+                        </td>
+                        <td>
+                            @Html.EditorFor(x => x.TraineeModuleDescriptions[i].EvidenceDate, new { htmlAttribute = new { @class = "form-control" } })
+                        </td>
+                        <td class="checkbox">
+                            @Html.EditorFor(x => x.TraineeModuleDescriptions[i].IsPass, new { htmlAttribute = new { @class = "form-control" } })
+                        </td>
+                        <td>
+                            <button id="btndummy-@i" type="button" class="btn btn-sm invisible">Dummy</button>
+                            <button id="btnAdd-@i" type="button" class="btn btn-secondary visible" style="left:90%; position:absolute" onclick="AddItem(this)">Add</button>
+                            <button id="btnRemove-@i" type="button" class="btn btn-sm btn-danger invisible" onclick="DeleteItem(this)">Remove</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <input type="hidden" id="hdnLastIndex" value="0" />
+
+    <div class="col-12 btn-group">
+        <div class="col-6 form-group text-right p-2">
+            @Html.ActionLink("Back To List", "Index")
+        </div>
+        <div class="col-6 form-group text-left p-2">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </div>
+}
+
+@*<div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        //$(".custom-file-input").on("change", function () {
+        //var fileName = $(this).val().split("\\").pop();
+        //$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        //});
+
+        function DeleteItem(btn) {
+            $(btn).closest('tr').remove();
+        }
+
+        function AddItem(btn) {
+
+            var table = document.getElementById('moduleInfo');
+            var rows = table.getElementsByTagName('tr');
+
+            var rowOuterHtml = rows[rows.length - 1].outerHTML;
+
+            var lastrowIdx = document.getElementById('hdnLastIndex').value;
+
+            var nextrowIdx = eval(lastrowIdx) + 1;
+
+            document.getElementById('hdnLastIndex').value = nextrowIdx;
+
+            rowOuterHtml = rowOuterHtml.replaceAll('_' + lastrowIdx + '_', '_' + nextrowIdx + '_');
+
+            rowOuterHtml = rowOuterHtml.replaceAll('[' + lastrowIdx + ']', '[' + nextrowIdx + ']');
+            rowOuterHtml = rowOuterHtml.replaceAll('-' + lastrowIdx, '-' + nextrowIdx);
+
+            var newRow = table.insertRow();
+            newRow.innerHTML = rowOuterHtml;
+
+            var btnAddId = btn.id;
+            var btnDeleteId = btnAddId.replaceAll('btnAdd', 'btnRemove');
+
+            var delbtn = document.getElementById(btnDeleteId);
+            delbtn.classList.add("visible");
+            delbtn.classList.remove("invisible");
+
+            var addbtn = document.getElementById(btnAddId);
+            addbtn.classList.remove("visible");
+            addbtn.classList.add("invisible");
+        }
+    </script>
+}

@@ -1,0 +1,120 @@
+﻿@model MVCProjectInMasterDetailsPattern.Models.Trainee
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Trainee</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Course.CourseName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Course.CourseName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TraineeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TraineeName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DOB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DOB)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TraineeEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TraineeEmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TraineeContact)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TraineeContact)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TraineeImage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TraineeImage)
+        </dd>
+
+    </dl>
+
+    <div class="col-md-12">
+        <table id="moduleInfo" class="table table-striped table-sm">
+            <thead>
+                <tr>
+                    <th>Module Name</th>
+                    <th>External Mark </th>
+                    <th>External Date</th>
+                    <th>Evidence Mark</th>
+                    <th>Evidence Date</th>
+                </tr>
+
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.TraineeModuleDescriptions.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(x => x.TraineeModuleDescriptions[i].ModuleName, new { htmlAttribute = new { @class = "form-control-plaintext" } })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x.TraineeModuleDescriptions[i].ExternalMark, new { htmlAttribute = new { @class = "form-control" } })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x.TraineeModuleDescriptions[i].ExternalDate, new { htmlAttribute = new { @class = "form-control" } })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x.TraineeModuleDescriptions[i].EvidenceMark, new { htmlAttribute = new { @class = "form-control" } })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x.TraineeModuleDescriptions[i].EvidenceDate, new { htmlAttribute = new { @class = "form-control" } })
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @*@using (Html.BeginForm())*@
+    @using (Ajax.BeginForm("Delete", "Trainees", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "div-record", OnSuccess = "$('.close').click()" }, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

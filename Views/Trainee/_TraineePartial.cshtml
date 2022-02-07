@@ -1,0 +1,119 @@
+﻿@model IEnumerable<MVCProjectInMasterDetailsPattern.Models.Trainee>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Course.CourseName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TraineeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DOB)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TraineeEmail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TraineeContact)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TraineeImage)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Course.CourseName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TraineeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DOB)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TraineeEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TraineeContact)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.TraineeImage)*@
+                <img src="@Url.Content(item.TraineeImage)" height="80" width="80" />
+            </td>
+            <td>
+            <td>
+                <a href="@Url.Action("Edit","Trainee",new {id=item.TraineeID })" class="editDialog"><i class="fa fa-pencil-square-o"></i>Edit</a>|
+                <a href="@Url.Action("Details","Trainee",new {id=item.TraineeID })" class="detialsDialog"><i class="fa fa-pencil-square-o"></i>Details</a>|
+                <a href="@Url.Action("Delete","Trainee",new {id=item.TraineeID })" class="deleteDialog"><i class="btn-danger"></i>Delete</a>
+            </td>
+
+
+        </tr>
+    }
+
+</table>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#Add").click(function (event) {
+            event.preventDefault();
+            $.get(this.href, function (response) {
+                $(".divForAdd").html(response);
+
+            });
+            $("#Add-Modal").modal({
+                backdrop: "static",
+            }, 'show');
+        });
+
+        $(".editDialog").click(function (event) {
+            event.preventDefault();
+            $.get(this.href, function (response) {
+                $(".divForUpdate").html(response);
+
+            });
+            $("#Edit-Modal").modal({
+                backdrop: "static",
+            }, 'show');
+        });
+
+        $(".detialsDialog").click(function (event) {
+            event.preventDefault();
+            $.get(this.href, function (response) {
+                $(".details").html(response);
+
+            });
+            $("#Edit-Modal").modal({
+                backdrop: "static",
+            }, 'show');
+        });
+
+        $(".deleteDialog").click(function (event) {
+            event.preventDefault();
+            $.get(this.href, function (response) {
+                $(".delete").html(response);
+
+            });
+            $("#Edit-Modal").modal({
+                backdrop: "static",
+            }, 'show');
+        });
+    })
+</script>
+
+

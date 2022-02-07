@@ -1,0 +1,116 @@
+﻿@model IEnumerable<MVCProjectInMasterDetailsPattern.Models.Trainer>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Course.CourseName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TrainerName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfBirth)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TrainerContact)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TrainerEmail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TrainerImage)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Course.CourseName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrainerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfBirth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrainerContact)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrainerEmail)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.IsActive)*@
+                @(item.IsActive ? "Active" : "Inactive" )
+            </td>
+            <td>
+                @* @Html.DisplayFor(modelItem => item.TrainerImage)*@
+                <img src="@Url.Content(item.TrainerImage)" width="80" height="80" />
+            </td>
+            <td>
+                <a href="@Url.Action("Edit","Trainer",new {id=item.TrainerID })" class="editDialog"><i class="fa fa-pencil-square-o"></i>Edit</a>|
+                <a href="@Url.Action("Details","Trainer",new {id=item.TrainerID })" class="detialsDialog"><i class="fa fa-pencil-square-o"></i>Details</a>|
+                <a href="@Url.Action("Delete","Trainer",new {id=item.TrainerID })" class="deleteDialog"><i class="btn-danger"></i>Delete</a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#Add").click(function (event) {
+            event.preventDefault();
+            $.get(this.href, function (response) {
+                $(".divForAdd").html(response);
+
+            });
+            $("#Add-Modal").modal({
+                backdrop: "static",
+            }, 'show');
+        });
+
+        $(".editDialog").click(function (event) {
+            event.preventDefault();
+            $.get(this.href, function (response) {
+                $(".divForUpdate").html(response);
+
+            });
+            $("#Edit-Modal").modal({
+                backdrop: "static",
+            }, 'show');
+        });
+
+        $(".detialsDialog").click(function (event) {
+            event.preventDefault();
+            $.get(this.href, function (response) {
+                $(".details").html(response);
+
+            });
+            $("#Edit-Modal").modal({
+                backdrop: "static",
+            }, 'show');
+        });
+
+        $(".deleteDialog").click(function (event) {
+            event.preventDefault();
+            $.get(this.href, function (response) {
+                $(".delete").html(response);
+
+            });
+            $("#Edit-Modal").modal({
+                backdrop: "static",
+            }, 'show');
+        });
+    })
+</script>
+
